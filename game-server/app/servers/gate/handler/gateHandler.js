@@ -34,11 +34,14 @@ handler.queryEntry = function(msg, session, next) {
 		});
 		return;
 	}
+
+	console.log(connectors);
+	
 	// select connector
 	var res = dispatcher.dispatch(uid, connectors);
 	next(null, {
 		code: 200,
-		host: res.host,
+		host: res.clientHost,
 		port: res.clientPort
 	});
 };

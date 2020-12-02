@@ -1,0 +1,83 @@
+version: "3.8"
+services:
+  game1:
+    image: chat
+    networks:
+      default:
+        ipv4_address: 172.30.0.10
+    ports:
+      - 3050:3050
+    volumes:
+      - ./servers.json:/app/config/servers.json:ro
+      - ./master.json:/app/config/master.json:ro
+    depends_on:
+      - game7
+  game2:
+    image: chat
+    networks:
+      default:
+        ipv4_address: 172.30.0.11
+    ports:
+      - 3051:3051
+    volumes:
+      - ./servers.json:/app/config/servers.json:ro
+      - ./master.json:/app/config/master.json:ro
+    depends_on:
+      - game7
+  game3:
+    image: chat
+    networks:
+      default:
+        ipv4_address: 172.30.0.12
+    ports:
+      - 3052:3052
+    volumes:
+      - ./servers.json:/app/config/servers.json:ro
+      - ./master.json:/app/config/master.json:ro
+    depends_on:
+      - game7
+  game4:
+    image: chat
+    networks:
+      default:
+        ipv4_address: 172.30.0.13
+    volumes:
+      - ./servers.json:/app/config/servers.json:ro
+      - ./master.json:/app/config/master.json:ro
+    depends_on:
+      - game7
+  game5:
+    image: chat
+    networks:
+      default:
+        ipv4_address: 172.30.0.14
+    volumes:
+      - ./servers.json:/app/config/servers.json:ro
+      - ./master.json:/app/config/master.json:ro
+    depends_on:
+      - game7
+  game6:
+    image: chat
+    networks:
+      default:
+        ipv4_address: 172.30.0.15
+    volumes:
+      - ./servers.json:/app/config/servers.json:ro
+      - ./master.json:/app/config/master.json:ro
+    depends_on:
+      - game7
+  game7:
+    image: chat
+    networks:
+      default:
+        ipv4_address: 172.30.0.16
+    ports:
+      - 3014:3014
+    volumes:
+      - ./servers.json:/app/config/servers.json:ro
+      - ./master.json:/app/config/master.json:ro
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.30.0.0/16
