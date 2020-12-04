@@ -225,26 +225,46 @@ $(document).ready(function() {
 		}
 
 		//query entry of connection
-		queryEntry(username, function(host, port) {
-			pomelo.init({
-				host: host,
-				port: port,
-				log: true
-			}, function() {
-				var route = "connector.entryHandler.enter";
-				pomelo.request(route, {
-					username: username,
-					rid: rid
-				}, function(data) {
-					if(data.error) {
-						showError(DUPLICATE_ERROR);
-						return;
-					}
-					setName();
-					setRoom();
-					showChat();
-					initUserList(data);
-				});
+		// queryEntry(username, function(host, port) {
+		// 	pomelo.init({
+		// 		host: host,
+		// 		port: port,
+		// 		log: true
+		// 	}, function() {
+		// 		var route = "connector.entryHandler.enter";
+		// 		pomelo.request(route, {
+		// 			username: username,
+		// 			rid: rid
+		// 		}, function(data) {
+		// 			if(data.error) {
+		// 				showError(DUPLICATE_ERROR);
+		// 				return;
+		// 			}
+		// 			setName();
+		// 			setRoom();
+		// 			showChat();
+		// 			initUserList(data);
+		// 		});
+		// 	});
+		// });
+		pomelo.init({
+			host: "localhost",
+			port: 3050,
+			log: true
+		}, function() {
+			var route = "connector.entryHandler.enter";
+			pomelo.request(route, {
+				username: username,
+				rid: rid
+			}, function(data) {
+				if(data.error) {
+					showError(DUPLICATE_ERROR);
+					return;
+				}
+				setName();
+				setRoom();
+				showChat();
+				initUserList(data);
 			});
 		});
 	});

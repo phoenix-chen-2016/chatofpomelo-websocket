@@ -1,83 +1,156 @@
 version: "3.8"
 services:
-  game1:
+  conn1:
     image: chat
-    networks:
-      default:
-        ipv4_address: 172.30.0.10
+    hostname: conn1
+    volumes:
+      - ./test/master.servers.json:/app/config/servers.json:ro
+      - ./master.json:/app/config/master.json:ro
+    command: 
+      - app.js
+      - env=development
+      - id=conn1  
+      - host=conn1  
+      - port=4050  
+      - serverType=connector
+      - clientPort=3050
+      - frontend=true
+    depends_on:
+      - master1
+  conn2:
+    image: chat
+    hostname: conn2
+    volumes:
+      - ./test/master.servers.json:/app/config/servers.json:ro
+      - ./master.json:/app/config/master.json:ro
+    command: 
+      - app.js
+      - env=development
+      - id=conn2
+      - host=conn2  
+      - port=4050  
+      - serverType=connector
+      - clientPort=3050
+      - frontend=true
+    depends_on:
+      - master1
+  conn3:
+    image: chat
+    hostname: conn3
+    volumes:
+      - ./test/master.servers.json:/app/config/servers.json:ro
+      - ./master.json:/app/config/master.json:ro
+    command: 
+      - app.js
+      - env=development
+      - id=conn3
+      - host=conn3  
+      - port=4050  
+      - serverType=connector
+      - clientPort=3050
+      - frontend=true
+    depends_on:
+      - master1
+  chat1:
+    image: chat
+    hostname: chat1
+    volumes:
+      - ./test/master.servers.json:/app/config/servers.json:ro
+      - ./master.json:/app/config/master.json:ro
+    command: 
+      - app.js
+      - env=development
+      - id=chat1  
+      - host=chat1  
+      - port=6050  
+      - serverType=chat
+    depends_on:
+      - master1
+  chat2:
+    image: chat
+    hostname: chat2
+    volumes:
+      - ./test/master.servers.json:/app/config/servers.json:ro
+      - ./master.json:/app/config/master.json:ro
+    command: 
+      - app.js
+      - env=development
+      - id=chat2  
+      - host=chat2  
+      - port=6050  
+      - serverType=chat
+    depends_on:
+      - master1
+  chat3:
+    image: chat
+    hostname: chat3
+    command: 
+      - app.js
+      - env=development
+      - id=chat3  
+      - host=chat3  
+      - port=6050  
+      - serverType=chat
+    volumes:
+      - ./test/master.servers.json:/app/config/servers.json:ro
+      - ./master.json:/app/config/master.json:ro
+    depends_on:
+      - master1
+  gate1:
+    image: chat
+    hostname: gate1
+    ports:
+      - 3014:3014
+    command: 
+      - app.js
+      - env=development
+      - "id=gate1"  
+      - "host=gate1"
+      - "serverType=gate"
+      - "clientPort=3014"
+      - frontend=true
+    volumes:
+      - ./test/master.servers.json:/app/config/servers.json:ro
+      - ./master.json:/app/config/master.json:ro
+    depends_on:
+      - master1
+  master1:
+    image: chat
+    hostname: master1
+    volumes:
+      - ./test/master.servers.json:/app/config/servers.json:ro
+      - ./master.json:/app/config/master.json:ro
+    command:
+      - app.js
+      - env=development
+      - id=master-server-1
+  conn4:
+    image: chat
+    hostname: conn4
+    volumes:
+      - ./master.json:/app/config/master.json:ro
+      - ./test/master.servers.json:/app/config/servers.json:ro
+    command: 
+      - app.js
+      - env=development
+      - id=conn4
+      - host=conn4  
+      - port=4050  
+      - serverType=connector
+      - clientPort=3050
+      - frontend=true
+    depends_on:
+      - master1
+  haproxy:
+    image: haproxy
     ports:
       - 3050:3050
     volumes:
-      - ./servers.json:/app/config/servers.json:ro
-      - ./master.json:/app/config/master.json:ro
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
     depends_on:
-      - game7
-  game2:
-    image: chat
-    networks:
-      default:
-        ipv4_address: 172.30.0.11
-    ports:
-      - 3051:3051
-    volumes:
-      - ./servers.json:/app/config/servers.json:ro
-      - ./master.json:/app/config/master.json:ro
-    depends_on:
-      - game7
-  game3:
-    image: chat
-    networks:
-      default:
-        ipv4_address: 172.30.0.12
-    ports:
-      - 3052:3052
-    volumes:
-      - ./servers.json:/app/config/servers.json:ro
-      - ./master.json:/app/config/master.json:ro
-    depends_on:
-      - game7
-  game4:
-    image: chat
-    networks:
-      default:
-        ipv4_address: 172.30.0.13
-    volumes:
-      - ./servers.json:/app/config/servers.json:ro
-      - ./master.json:/app/config/master.json:ro
-    depends_on:
-      - game7
-  game5:
-    image: chat
-    networks:
-      default:
-        ipv4_address: 172.30.0.14
-    volumes:
-      - ./servers.json:/app/config/servers.json:ro
-      - ./master.json:/app/config/master.json:ro
-    depends_on:
-      - game7
-  game6:
-    image: chat
-    networks:
-      default:
-        ipv4_address: 172.30.0.15
-    volumes:
-      - ./servers.json:/app/config/servers.json:ro
-      - ./master.json:/app/config/master.json:ro
-    depends_on:
-      - game7
-  game7:
-    image: chat
-    networks:
-      default:
-        ipv4_address: 172.30.0.16
-    ports:
-      - 3014:3014
-    volumes:
-      - ./servers.json:/app/config/servers.json:ro
-      - ./master.json:/app/config/master.json:ro
+      - conn1
+      - conn2
+      - conn3
+      - conn4
 networks:
   default:
-    ipam:
-      config:
-        - subnet: 172.30.0.0/16

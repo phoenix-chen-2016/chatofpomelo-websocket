@@ -1,0 +1,11 @@
+{
+    "development": {
+         "chat": [
+              {
+                   "id": "chat-server-3",
+                   "host": "172.30.0.15",
+                   "port": 6050
+              }
+         ]
+    }
+}

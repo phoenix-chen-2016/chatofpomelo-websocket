@@ -1,0 +1,14 @@
+{
+    "development": {
+         "connector": [
+              {
+                   "id": "connector-server-2",
+                   "host": "172.30.0.11",
+                   "port": 4050,
+                   "clientPort": 3051,
+                   "frontend": true,
+                   "clientHost": "localhost"
+              }
+         ]
+    }
+}

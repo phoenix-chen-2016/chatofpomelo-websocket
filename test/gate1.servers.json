@@ -1,0 +1,13 @@
+{
+    "development": {
+        "gate": [
+            {
+                "id": "gate1",
+                "host": "gate1",
+                "clientPort": 3014,
+                "clientHost": "localhost",
+                "frontend": true
+            }
+        ]
+    }
+}
